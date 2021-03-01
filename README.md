@@ -9,7 +9,7 @@ This repository contains notebooks for my Capstone project completed during Gene
 
 The NBA is the most prestigous league in the world for men's basketball. This project aims to use player form data to try and predict home-wins. There are multiple steps to this project:
 ### Data collection using API's:
-- Collect data from https://www.basketball-reference.com/
+- Collect data from [BasketballReference](https://www.basketball-reference.com/)
 - Collect data from the official NBA web-page
 ### Data merging
 - Create an SQL database for easy merging of data
