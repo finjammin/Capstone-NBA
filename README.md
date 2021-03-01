@@ -7,7 +7,7 @@ This repository contains notebooks for my Capstone project completed during Gene
 
 # Introduction and aims:
 
-The NBA is the most prestigous league in the world for men's basketball. This project aims to use player form data to try and predict home-wins. There are multiple steps to thsi project:
+The NBA is the most prestigous league in the world for men's basketball. This project aims to use player form data to try and predict home-wins. There are multiple steps to this project:
 ### Data collection using API's:
 - Collect data from https://www.basketball-reference.com/
 - Collect data from the official NBA web-page
