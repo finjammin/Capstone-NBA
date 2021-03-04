@@ -23,3 +23,6 @@
 - Remove some colinear features
 - Replace some 0 values with NaN values for some percent statistics (for rolling averages)
 - Adjust data to a per 40 minute basis
+#### pt4_clustering
+- Look at player's average performances, and cluster into categories
+- compare to position_dictionary created in part 3
