@@ -71,16 +71,20 @@ Finding the optimum timespan to create moving averages for our predictor variabl
 ##### Decide not to include post COVID data 'the bubble':
 |     |     |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/finjammin/Capstone-NBA/main/Pt3_Data_processing/images/covid_anomaly.png" width="1000"/>  |  The change in wins is pretty drastic compared to normal. We can see a small trend that home court advantage appears to be less important than it used to be, however 53% is quite alot lower than the almost 60% over the entire set <br><br> Becuase of the way the data has been structured and the anomalous nature of the pandemic <br><br> The resulting dataframe has a shape of (23002, 9003) <br><br> During the processing ~4000 games were lost including all games from the first season 1999-2000 |
+| <img src="https://raw.githubusercontent.com/finjammin/Capstone-NBA/main/Pt3_Data_processing/images/covid_anomaly.png" width="800"/>  |  The change in wins is pretty drastic compared to normal. We can see a small trend that home court advantage appears to be less important than it used to be, however 53% is quite alot lower than the almost 60% over the entire set <br><br> Becuase of the way the data has been structured and the anomalous nature of the pandemic <br><br> The resulting dataframe has a shape of (23002, 9003) <br><br> During the processing ~4000 games were lost including all games from the first season 1999-2000 |
 
 ### Results
-##### Logistic Regression using no polynomial features
+##### Logistic Regression using no polynomial features (adjusted for time)
+| Coefficients |     |
+| --- | --- |
+| <img src="https://github.com/finjammin/Capstone-NBA/blob/main/Pt4_Modelling/Images/coefficients_lrgrid_66.png" width="1200"/> | The features with the largest coefficients are as to be expected, plus_minus shows the average point differential while the player was on the court, although there is a lot of co-linearity with these features as players, particularly starting players are often on the court for large parts of the same time during a game.<br><br> Interesting to see age crop up, as well as type (regular season/playofff)<br><br> Also some hussle stats h_s2_ewm_fta, a_s2_ewm_blk, a_pf_ewm_stl et al. |
 
 ### Limitations and future improvements
 
 - The method's used mean that we assume that we know who will be playing in the game, and also the starting lineup, therefore should this be productionised it would rely on only being useful just before tipoff.
-- Most teams rely on a rotation of 8 players however there are some notable exceptions, for instance the Toronto Raptor's in their 2019-2020 championship winning season regularly relied on 9 players or more, the way in whcih the data is structured would not really take this into account.
+- Most teams rely on a rotation of 8 players however there are some notable exceptions, for instance the Toronto Raptor's in their 2019-2020 championship winning season regularly relied on 9 players or more, the way in which the data is structured would not take this into account.
 - There is no match-up data involved, by creating a network between players and their one-one matchup it would be possible to include some inference about average player performance and apply that to their form statistics. A particularly good example of this is when Joel Embiid (one of the best players in the league) is matched up against Marc Gasol he performs at ~60% of his regular performances. [In November 2019 Marc Gasol held Joel Embiid to 0 points in 32 minutes](https://www.landofbasketball.com/games_between/joel_embiid_vs_marc_gasol.htm)
-- Although we have used polynomial features for each player, it would be good to use some sort of combination of features between players. Relationships between players may help in achieveing better scores and understandings between players on the same team.
+- Create features between players
 - The only size metric for the player's used is height. In reality height is only one of many size metrics which are helpful for identifying features for winning basketball, in particular to defense. In the SQL database there is draft combine metrics, including statistics like hand size and wingspan. However top prospects often do not take part, therefore only about 70% of players had these physical attributes. If possible wingspan be would be a great addition to this dataset as it is widely considered one of the most important attributes for defense, an area of the game sorely missing from the dataset used.
-- The NBA has for the past 3 years collected defensive statistics, however for the scope of this project they were not used. It would be interesting to see how much better the model could get using these statistics, despite the much smaller dataset this would result in.
+- The NBA has for the past 3 years collected defensive statistics, however for the scope of this project they were not used.
+- Aim to try and productionise a model with predictions made on game day.
