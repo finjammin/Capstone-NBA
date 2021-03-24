@@ -71,13 +71,40 @@ Finding the optimum timespan to create moving averages for our predictor variabl
 ##### Decide not to include post COVID data 'the bubble':
 |     |     |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/finjammin/Capstone-NBA/main/Pt3_Data_processing/images/covid_anomaly.png" width="800"/>  |  The change in wins is pretty drastic compared to normal. We can see a small trend that home court advantage appears to be less important than it used to be, however 53% is quite alot lower than the almost 60% over the entire set <br><br> Becuase of the way the data has been structured and the anomalous nature of the pandemic <br><br> The resulting dataframe has a shape of (23002, 9003) <br><br> During the processing ~4000 games were lost including all games from the first season 1999-2000 |
+| <img src="https://raw.githubusercontent.com/finjammin/Capstone-NBA/main/Pt3_Data_processing/images/covid_anomaly.png" width="600"/>  |  The change in wins is pretty drastic compared to normal. We can see a small trend that home court advantage appears to be less important than it used to be, however 53% is quite alot lower than the almost 60% over the entire set <br><br> Becuase of the way the data has been structured and the anomalous nature of the pandemic <br><br> The resulting dataframe has a shape of (23002, 9003) <br><br> During the processing ~4000 games were lost including all games from the first season 1999-2000 |
 
 ### Results
 ##### Logistic Regression using no polynomial features (adjusted for time)
+Train score :  0.676<br>Test score  :  0.661<br>Mean score. :  0.669
 | Coefficients |     |
 | --- | --- |
 | <img src="https://github.com/finjammin/Capstone-NBA/blob/main/Pt4_Modelling/Images/coefficients_lrgrid_66.png" width="1200"/> | The features with the largest coefficients are as to be expected, plus_minus shows the average point differential while the player was on the court, although there is a lot of co-linearity with these features as players, particularly starting players are often on the court for large parts of the same time during a game.<br><br> Interesting to see age crop up, as well as type (regular season/playofff)<br><br> Also some hussle stats h_s2_ewm_fta, a_s2_ewm_blk, a_pf_ewm_stl et al. |
+
+##### Logistic Regression using no polynomial features (not adjusted for time)
+Train score :  0.681<br>Test score  :  0.663<br>Mean score. :  0.673
+| Coefficients |     |
+| --- | --- |
+| <img src="https://github.com/finjammin/Capstone-NBA/blob/main/Pt4_Modelling/Images/coefficients_nonadj_lr.png" width="800"/> | Interesting to see that age becomes a more prevalent statistic when performances are not changed to a per 40 minute basis.<br><br> Nice to see that John Hollinger's GameScore (applied in feature engineering) also appears 'h_c__gs'. <br><br> Still alot of collinearity in the features, probably best to apply some sort of PCA. |
+<br>
+<img src="https://github.com/finjammin/Capstone-NBA/blob/main/Pt4_Modelling/Images/roc_precisionrecall.png" width="1200"/>
+<br>
+<img src="https://github.com/finjammin/Capstone-NBA/blob/main/Pt4_Modelling/Images/logreg_crossover_nonadj.png" width="400"/> 
+<br>As we can see from the above precision-recall curves and roc curves, as well as the distributions of the prrobabilities show there is not much point in adjusting thresholds to try and improve the accuracy scores.<br>
+
+##### Random Forest Classifier
+Train score   :  0.713<br>Test score    :  0.660<br>Mean CVscore. :  0.666
+<br>Best params : {'criterion': 'entropy', 'max_depth': 15, 'min_impurity_decrease': 0.001}
+
+##### Gradient Boosting Classifier
+Train score   :  0.713<br>Test score    :  0.660<br>Mean CVscore. :  0.668
+<br>{'learning_rate': 0.025, 'max_depth': 4}
+
+| RandomForestClassifier | GradientBoostingClassifier |
+| --- | --- |
+| <img src="https://github.com/finjammin/Capstone-NBA/blob/main/Pt4_Modelling/Images/feature_imp_rfc.png" width="400"/> | <img src="https://github.com/finjammin/Capstone-NBA/blob/main/Pt4_Modelling/Images/feature_imp_gfc.png" width="400"/> |
+<br>
+GradientBoostingClassifier train and test score performance.
+<img src="https://github.com/finjammin/Capstone-NBA/blob/main/Pt4_Modelling/Images/gfc_iterations_performance.png" width="400"/>
 
 ### Limitations and future improvements
 
